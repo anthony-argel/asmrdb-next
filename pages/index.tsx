@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import LatestChannels from "../components/LatestChannels";
+import LatestReviews from "../components/LatestReviews";
+import LatestTags from "../components/LatestTags";
 import Statistics from "../components/Stats";
 
 interface tagData {
@@ -12,6 +14,7 @@ interface tagData {
 }
 
 interface reviewData {
+    _id: string;
     channelid: {
         _id: string;
         name: string;
@@ -52,12 +55,18 @@ interface Props {
     latestChannels: channelData[];
     stats: stats;
     tags: tagData[];
+    reviews: reviewData[];
 }
 
-const Home: NextPage<Props> = ({ latestChannels, stats, tags }: Props) => {
+const Home: NextPage<Props> = ({
+    latestChannels,
+    stats,
+    tags,
+    reviews,
+}: Props) => {
     return (
         <>
-            <div className="bg-white p-2 text-center">
+            <div className="bg-white p-4 text-center">
                 <h1 className="font-bold text-3xl text-center">
                     ASMR Database
                 </h1>
@@ -65,12 +74,23 @@ const Home: NextPage<Props> = ({ latestChannels, stats, tags }: Props) => {
                 <p>A place for ASMR enthusiasts to share information.</p>
             </div>
             <LatestChannels latestChannels={latestChannels}></LatestChannels>
-            <Statistics
-                channels={stats.channels}
-                tags={stats.tags}
-                users={stats.users}
-                reviews={stats.reviews}
-            ></Statistics>
+
+            <div className="md:grid md:grid-cols-3 md:gap-4 md:grid-rows-1">
+                <div className="mt-4 md:row-auto">
+                    <Statistics
+                        channels={stats.channels}
+                        tags={stats.tags}
+                        users={stats.users}
+                        reviews={stats.reviews}
+                    ></Statistics>
+                </div>
+                <div className="mt-4 md:row-auto">
+                    <LatestTags tags={tags}></LatestTags>
+                </div>
+                <div className="mt-4 md:row-auto">
+                    <LatestReviews reviews={reviews}></LatestReviews>
+                </div>
+            </div>
         </>
     );
 };

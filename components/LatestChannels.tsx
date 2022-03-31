@@ -28,16 +28,13 @@ interface Props {
 
 function LatestChannels({ latestChannels }: Props) {
     return (
-        <div className="bg-white mt-4 p-2 text-center">
+        <div className="bg-white mt-4 p-4 text-center">
             <h2 className=" font-bold text-2xl">Latest Channels</h2>
             <hr></hr>
-            <div className="flex gap-5 m-2">
+            <div className="grid grid-cols-3 lg:grid-cols-6 gap-4 m-2">
                 {latestChannels.map((channel) => {
                     return (
-                        <div
-                            key={channel._id}
-                            className="flex flex-col basis-1/3"
-                        >
+                        <div key={channel._id} className="">
                             <div>
                                 <Image
                                     src={channel.imageurl}

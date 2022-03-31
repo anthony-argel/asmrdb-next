@@ -11,36 +11,41 @@ function Nav() {
     ];
     const [showMenu, setShowMenu] = useState<Boolean>(false);
     return (
-        <nav className="bg-black text-white p-3">
-            <div className="flex justify-between items-center">
-                <p>Home</p>
-                <p className="text-2xl">
-                    <GiHamburgerMenu
-                        className="cursor-pointer"
-                        onClick={() => setShowMenu((prevMenu) => !prevMenu)}
-                    ></GiHamburgerMenu>
-                </p>
-            </div>
-            <ul className={`${showMenu ? "" : "hidden"}`}>
+        <nav className="bg-black text-white p-3 md:flex md:justify-between">
+            <ul className={`flex flex-col gap-3 md:flex-row md:items-center `}>
+                <li className="flex justify-between ">
+                    <p>Home</p>
+                    <p className="text-2xl">
+                        <GiHamburgerMenu
+                            className="cursor-pointer md:hidden"
+                            onClick={() => setShowMenu((prevMenu) => !prevMenu)}
+                        ></GiHamburgerMenu>
+                    </p>
+                </li>
                 {links.map((value, index) => {
                     return (
-                        <li className={`mt-1 mb-1`} key={index}>
+                        <li
+                            className={`${
+                                showMenu ? "" : "hidden"
+                            } md:flex flex-row`}
+                            key={index}
+                        >
                             {value[0]}
                         </li>
                     );
                 })}
             </ul>
-            <div className={`${showMenu ? "" : "hidden"}`}>
+            <div className={`${showMenu ? "" : "hidden"} md:flex md:ml-3`}>
                 <form>
                     <input
-                        className="p-1"
+                        className="p-1 border"
                         type="text"
                         id="search"
                         name="search"
                         placeholder="Search..."
                     />
                     <button>
-                        <p className="p-1 border hover:text-black hover:bg-white">
+                        <p className="p-1 border box-border hover:text-black hover:bg-white">
                             Search
                         </p>
                     </button>

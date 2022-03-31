@@ -9,7 +9,7 @@ function Layout({ children }: any) {
                     <Nav></Nav>
                 </div>
             </div>
-            <main className="min-h-[98vh] flex justify-center">
+            <main className="flex justify-center">
                 <div className="w-full m-4 md:w-2/3">{children}</div>
             </main>
             <Footer></Footer>
