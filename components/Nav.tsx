@@ -14,7 +14,9 @@ function Nav() {
         <nav className="bg-black text-white p-3 md:flex md:justify-between">
             <ul className={`flex flex-col gap-3 md:flex-row md:items-center `}>
                 <li className="flex justify-between ">
-                    <p>Home</p>
+                    <Link href="/">
+                        <a>Home</a>
+                    </Link>
                     <p className="text-2xl">
                         <GiHamburgerMenu
                             className="cursor-pointer md:hidden"
@@ -30,7 +32,9 @@ function Nav() {
                             } md:flex flex-row`}
                             key={index}
                         >
-                            {value[0]}
+                            <Link href={value[1]}>
+                                <a>{value[0]}</a>
+                            </Link>
                         </li>
                     );
                 })}

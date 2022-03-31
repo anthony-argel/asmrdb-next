@@ -3,11 +3,12 @@ import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  );
+    let api = "https://dry-hollows-28901.herokuapp.com";
+    return (
+        <Layout>
+            <Component {...pageProps} api={api} />
+        </Layout>
+    );
 }
 
 export default MyApp;
