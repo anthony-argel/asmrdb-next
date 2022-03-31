@@ -1,42 +1,53 @@
 import Link from "next/link";
+import { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Nav() {
-  return (
-    <nav className="bg-black text-white p-3 flex justify-between min-h-[5vh] ">
-      <div className="flex gap-3 items-center">
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-        <Link href="/">
-          <a>Channels</a>
-        </Link>
-        <Link href="/">
-          <a>Tags</a>
-        </Link>
-        <Link href="/">
-          <a>Discussion</a>
-        </Link>
-      </div>
-      <div className="flex gap-5 items-center">
-        <form>
-          <input
-            className="p-1"
-            type="text"
-            id="search"
-            name="search"
-            placeholder="Search..."
-          />
-          <button>
-            <BiSearchAlt size={"20px"}></BiSearchAlt>
-          </button>
-        </form>
-        <Link href="/">
-          <a>Login</a>
-        </Link>
-      </div>
-    </nav>
-  );
+    const links = [
+        ["Channels", "/channels/1"],
+        ["Tags", "/tags"],
+        ["Forum", "/forum"],
+    ];
+    const [showMenu, setShowMenu] = useState<Boolean>(false);
+    return (
+        <nav className="bg-black text-white p-3">
+            <div className="flex justify-between items-center">
+                <p>Home</p>
+                <p className="text-2xl">
+                    <GiHamburgerMenu
+                        className="cursor-pointer"
+                        onClick={() => setShowMenu((prevMenu) => !prevMenu)}
+                    ></GiHamburgerMenu>
+                </p>
+            </div>
+            <ul className={`${showMenu ? "" : "hidden"}`}>
+                {links.map((value, index) => {
+                    return (
+                        <li className={`mt-1 mb-1`} key={index}>
+                            {value[0]}
+                        </li>
+                    );
+                })}
+            </ul>
+            <div className={`${showMenu ? "" : "hidden"}`}>
+                <form>
+                    <input
+                        className="p-1"
+                        type="text"
+                        id="search"
+                        name="search"
+                        placeholder="Search..."
+                    />
+                    <button>
+                        <p className="p-1 border hover:text-black hover:bg-white">
+                            Search
+                        </p>
+                    </button>
+                </form>
+            </div>
+        </nav>
+    );
 }
 
 export default Nav;
