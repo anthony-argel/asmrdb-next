@@ -25,13 +25,28 @@ interface tagData {
     _id: string;
     tagname: string;
 }
+
+interface rater {
+    _id: string;
+    uesrname: string;
+}
+
+interface rating {
+    rating: number;
+    _id: string;
+    raterid: rater;
+    date: string;
+    review: string;
+}
+
 interface Props {
     channel: channelData;
     api: string;
     loggedIn: boolean;
+    ratings: rating[];
 }
 
-function Channel({ channel, loggedIn, api }: Props) {
+function Channel({ channel, loggedIn, api, ratings }: Props) {
     const router = useRouter();
     const { id } = router.query;
     return (
@@ -44,7 +59,7 @@ function Channel({ channel, loggedIn, api }: Props) {
                 imgsize="basis-1/3"
                 infosize="basis-2/3"
             ></ChannelInfo>
-            <ChannelStatistics></ChannelStatistics>
+            <ChannelStatistics id={id} api={api}></ChannelStatistics>
             <ChannelComments id={id} api={api}></ChannelComments>
         </div>
     );
