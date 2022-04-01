@@ -20,7 +20,7 @@ const Tags = ({ tags }: Props) => {
                     ? tags.map((value) => {
                           return (
                               <p key={value._id}>
-                                  <Link href={"/tag/" + value._id}>
+                                  <Link href={"/tag/" + value._id + "/1"}>
                                       <a className="text-blue-600 underline">
                                           {value.name}
                                       </a>

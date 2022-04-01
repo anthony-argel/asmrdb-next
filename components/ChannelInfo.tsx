@@ -32,9 +32,18 @@ interface Props {
     api: string;
     loggedIn: boolean;
     id: string | string[] | undefined;
+    imgsize: string;
+    infosize: string;
 }
 
-const ChannelInfo = ({ channel, api, loggedIn, id }: Props) => {
+const ChannelInfo = ({
+    channel,
+    api,
+    loggedIn,
+    id,
+    imgsize,
+    infosize,
+}: Props) => {
     const [requestedYTUpdate, setRequestedYTUpdate] = useState<boolean>(false);
     const [YTUpdateError, setYTUpdateError] = useState<string>("");
     const [allTags, setAllTags] = useState([]);
@@ -64,19 +73,29 @@ const ChannelInfo = ({ channel, api, loggedIn, id }: Props) => {
 
     return (
         <div className="flex flex-col md:flex-row bg-white p-4">
-            <div className="basis-1/3">
-                <Image
-                    src={channel.imageurl}
-                    className=""
-                    layout="responsive"
-                    alt=""
-                    width={1}
-                    height={1}
-                ></Image>
+            <div className={imgsize}>
+                <Link href={"/channel/" + channel._id}>
+                    <a>
+                        <Image
+                            src={channel.imageurl}
+                            className=""
+                            layout="responsive"
+                            alt=""
+                            width={1}
+                            height={1}
+                        ></Image>
+                    </a>
+                </Link>
             </div>
-            <div className="basis-2/3 p-4 flex flex-col justify-between gap-2">
+            <div
+                className={`${infosize} p-4 flex flex-col justify-between gap-2`}
+            >
                 <div className="leading-9">
-                    <h1 className="font-bold text-3xl">{channel.name}</h1>
+                    <h1 className="font-bold text-3xl">
+                        <Link href={"/channel/" + channel._id}>
+                            <a>{channel.name}</a>
+                        </Link>
+                    </h1>
                     <h2 className="">Aliases: {channel.aliases}</h2>
                     <hr></hr>
                     <div>
@@ -124,7 +143,7 @@ const ChannelInfo = ({ channel, api, loggedIn, id }: Props) => {
                         {channel.tags &&
                             channel.tags.map((value, index) => (
                                 <span key={value._id}>
-                                    <Link href={"/tag/" + value._id}>
+                                    <Link href={"/tag/" + value._id + "/1"}>
                                         <a className="text-blue-600 underline">
                                             {value.tagname}
                                         </a>

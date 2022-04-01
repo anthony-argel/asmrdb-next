@@ -41,6 +41,8 @@ function Channel({ channel, loggedIn, api }: Props) {
                 api={api}
                 loggedIn={loggedIn}
                 id={id}
+                imgsize="basis-1/3"
+                infosize="basis-2/3"
             ></ChannelInfo>
             <ChannelStatistics></ChannelStatistics>
             <ChannelComments id={id} api={api}></ChannelComments>

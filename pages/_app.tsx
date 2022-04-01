@@ -6,7 +6,7 @@ import { useState } from "react";
 function MyApp({ Component, pageProps }: AppProps) {
     let api = "https://dry-hollows-28901.herokuapp.com";
 
-    const [loggedIn, setLoggedIn] = useState<Boolean>(true);
+    const [loggedIn, setLoggedIn] = useState<Boolean>(false);
     return (
         <Layout>
             <Component

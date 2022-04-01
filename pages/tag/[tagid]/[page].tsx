@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import ChannelInfo from "../../components/ChannelInfo";
+import ChannelInfo from "../../../components/ChannelInfo";
 
 interface channelData {
     status: string;
@@ -29,11 +29,11 @@ interface Props {
     loggedIn: boolean;
 }
 
-const Channels = ({ channels, api, loggedIn }: Props) => {
+const Tag = ({ channels, api, loggedIn }: Props) => {
     return (
         <div className="min-h-[90vh] bg-white p-4">
             <h1 className="text-3xl font-bold text-center">
-                Channels{" "}
+                Tags{" "}
                 <span className="text-xl">
                     ~{channels.length} Results Found
                 </span>
@@ -62,8 +62,14 @@ const Channels = ({ channels, api, loggedIn }: Props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     let channels: channelData[] = [];
     let page: string | undefined | string[] = context.params?.page;
+    let tagid: string | undefined | string[] = context.params?.tagid;
+    let url =
+        "https://dry-hollows-28901.herokuapp.com/tag/" +
+        tagid +
+        "/channels/" +
+        page;
 
-    let url = "https://dry-hollows-28901.herokuapp.com/channel/limit/" + page;
+    console.log(url);
     await fetch(url)
         .then((res) => {
             if (res.ok) return res.json();
@@ -81,4 +87,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 };
 
-export default Channels;
+export default Tag;
