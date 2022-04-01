@@ -3,8 +3,8 @@ const { default: Nav } = require("./Nav");
 import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
-    loggedIn: boolean;
-    setLoggedIn: Dispatch<SetStateAction<boolean>>;
+    loggedIn: Boolean;
+    setLoggedIn: Dispatch<SetStateAction<Boolean>>;
     children: any;
 }
 

@@ -13,7 +13,7 @@ const Login = ({ api, setLoggedIn }: Props) => {
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<boolean>(false);
 
-    const submitForm = (e: React.FormEvent<HTMLElement>) => {
+    const login = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
 
         fetch(api + "/user/login", {
@@ -47,7 +47,7 @@ const Login = ({ api, setLoggedIn }: Props) => {
                 <h1 className="text-3xl font-bold text-center">Login</h1>
                 <form
                     className="border flex flex-col p-4 mt-4"
-                    onSubmit={(e) => submitForm(e)}
+                    onSubmit={(e) => login(e)}
                 >
                     <label htmlFor="email">Email:</label>
                     <input
@@ -88,7 +88,7 @@ const Login = ({ api, setLoggedIn }: Props) => {
                 <hr className="mt-4 mb-4"></hr>
                 <div className="text-center">
                     <Link href="/signup">
-                        <a className="text-xl  underline text-blue-600">
+                        <a className="text-xl underline text-blue-600">
                             Create an account
                         </a>
                     </Link>
