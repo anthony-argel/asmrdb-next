@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const [loggedIn, setLoggedIn] = useState<Boolean>(false);
     return (
-        <Layout>
+        <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
             <Component
                 {...pageProps}
                 api={api}

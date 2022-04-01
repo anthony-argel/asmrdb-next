@@ -1,15 +1,26 @@
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-function Nav() {
+interface Props {
+    loggedIn: boolean;
+    setLoggedIn: Dispatch<SetStateAction<boolean>>;
+}
+
+function Nav({ loggedIn, setLoggedIn }: Props) {
     const links = [
         ["Channels", "/channels/1"],
         ["Tags", "/tags"],
         ["Forum", "/forum"],
     ];
     const [showMenu, setShowMenu] = useState<Boolean>(false);
+
+    const logOut = () => {
+        localStorage.removeItem("token");
+        setLoggedIn(false);
+    };
+
     return (
         <nav className="bg-black text-white p-3 md:flex md:justify-between">
             <ul className={`flex flex-col gap-3 md:flex-row md:items-center `}>
@@ -39,7 +50,11 @@ function Nav() {
                     );
                 })}
             </ul>
-            <div className={`${showMenu ? "" : "hidden"} md:flex md:ml-3`}>
+            <div
+                className={`${
+                    showMenu ? "" : "hidden"
+                } flex md:flex md:justify-center md:items-center md:ml-3`}
+            >
                 <form>
                     <input
                         className="p-1 border"
@@ -54,6 +69,15 @@ function Nav() {
                         </p>
                     </button>
                 </form>
+                {loggedIn ? (
+                    <p className="md:ml-3" onClick={(e) => logOut()}>
+                        Log out
+                    </p>
+                ) : (
+                    <Link href="/login">
+                        <a className="md:ml-3">Log in</a>
+                    </Link>
+                )}
             </div>
         </nav>
     );

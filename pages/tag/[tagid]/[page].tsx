@@ -27,13 +27,14 @@ interface Props {
     channels: channelData[];
     api: string;
     loggedIn: boolean;
+    tagname: string;
 }
 
-const Tag = ({ channels, api, loggedIn }: Props) => {
+const Tag = ({ channels, api, loggedIn, tagname }: Props) => {
     return (
         <div className="min-h-[90vh] bg-white p-4">
             <h1 className="text-3xl font-bold text-center">
-                Tags{" "}
+                {tagname !== "" ? tagname : "Tag"}{" "}
                 <span className="text-xl">
                     ~{channels.length} Results Found
                 </span>
@@ -63,6 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let channels: channelData[] = [];
     let page: string | undefined | string[] = context.params?.page;
     let tagid: string | undefined | string[] = context.params?.tagid;
+    let tagname: string = "";
     let url =
         "https://dry-hollows-28901.herokuapp.com/tag/" +
         tagid +
@@ -77,12 +79,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         .then((res) => {
             if (res) {
                 channels = res.channels;
+                tagname = res.tag.name;
             }
         });
 
     return {
         props: {
             channels: channels,
+            tagname: tagname,
         },
     };
 };
