@@ -30,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [api]);
 
     useEffect(() => {
+        console.log("pinged server");
         verifyToken();
     }, [verifyToken]);
 

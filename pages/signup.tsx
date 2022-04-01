@@ -23,7 +23,7 @@ const Signup = ({ api, setLoggedIn }: Props) => {
         if (accountCreated) {
             router.push("/login");
         }
-    }, [accountCreated]);
+    }, [accountCreated, router]);
 
     function signup(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();

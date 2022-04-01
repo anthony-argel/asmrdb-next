@@ -60,7 +60,11 @@ function Channel({ channel, loggedIn, api, ratings }: Props) {
                 infosize="basis-2/3"
             ></ChannelInfo>
             <ChannelStatistics id={id} api={api}></ChannelStatistics>
-            <ChannelComments id={id} api={api}></ChannelComments>
+            <ChannelComments
+                loggedIn={loggedIn}
+                id={id}
+                api={api}
+            ></ChannelComments>
         </div>
     );
 }

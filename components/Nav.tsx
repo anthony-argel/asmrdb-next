@@ -70,7 +70,10 @@ function Nav({ loggedIn, setLoggedIn }: Props) {
                     </button>
                 </form>
                 {loggedIn ? (
-                    <p className="md:ml-3" onClick={(e) => logOut()}>
+                    <p
+                        className="md:ml-3 cursor-pointer"
+                        onClick={(e) => logOut()}
+                    >
                         Log out
                     </p>
                 ) : (
