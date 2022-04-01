@@ -26,7 +26,7 @@ const LatestReviews = ({ reviews }: Props) => {
             {reviews.map((value) => {
                 return (
                     <p key={value._id} className="mt-4">
-                        <Link href={"/channel/" + value._id}>
+                        <Link href={"/channel/" + value.channelid._id}>
                             <a className="text-blue-600 underline">
                                 {value.channelid.name}
                             </a>

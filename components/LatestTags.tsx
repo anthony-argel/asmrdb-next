@@ -17,7 +17,7 @@ function LatestTags({ tags }: Props) {
             {tags.map((value) => {
                 return (
                     <p key={value._id} className="mt-4">
-                        <Link href={"/tag/" + value._id}>
+                        <Link href={"/tag/" + value._id + "/1"}>
                             <a className="text-blue-600 underline">
                                 {value.name}
                             </a>
