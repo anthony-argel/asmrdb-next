@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface reviewData {
     _id: string;
     channelid: {
@@ -24,7 +26,12 @@ const LatestReviews = ({ reviews }: Props) => {
             {reviews.map((value) => {
                 return (
                     <p key={value._id} className="mt-4">
-                        {value.channelid.name} - {value.rating}/10
+                        <Link href={"/channel/" + value._id}>
+                            <a className="text-blue-600 underline">
+                                {value.channelid.name}
+                            </a>
+                        </Link>
+                        - {value.rating}/10
                     </p>
                 );
             })}

@@ -1,4 +1,4 @@
-import type { NextPage, GetStaticProps } from "next";
+import type { NextPage, GetStaticProps, GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -95,7 +95,7 @@ const Home: NextPage<Props> = ({
     );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
     let latestChannels: channelData[] = [];
     let stats: stats = {
         channels: -1,

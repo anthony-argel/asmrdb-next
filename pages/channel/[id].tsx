@@ -1,4 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import { useRouter } from "next/router";
+import ChannelComments from "../../components/ChannelComments";
+import ChannelInfo from "../../components/ChannelInfo";
+import ChannelStatistics from "../../components/ChannelStatistics";
 
 interface channelData {
     status: string;
@@ -19,19 +23,27 @@ interface channelData {
 
 interface tagData {
     _id: string;
-    name: string;
+    tagname: string;
 }
-
 interface Props {
     channel: channelData;
+    api: string;
+    loggedIn: boolean;
 }
 
-function Channel({ channel }: Props) {
-    console.log(channel);
+function Channel({ channel, loggedIn, api }: Props) {
+    const router = useRouter();
+    const { id } = router.query;
     return (
-        <div className="bg-white p-4">
-            <h1 className="text-3xl font-bold text-center">Channel</h1>
-            <hr></hr>
+        <div>
+            <ChannelInfo
+                channel={channel}
+                api={api}
+                loggedIn={loggedIn}
+                id={id}
+            ></ChannelInfo>
+            <ChannelStatistics></ChannelStatistics>
+            <ChannelComments id={id} api={api}></ChannelComments>
         </div>
     );
 }
@@ -57,7 +69,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         })
         .then((res) => {
             if (res) {
-                console.log(res);
                 channel = res.channel;
             }
         });

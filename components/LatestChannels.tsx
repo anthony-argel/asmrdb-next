@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface tagData {
     _id: string;
@@ -44,7 +45,11 @@ function LatestChannels({ latestChannels }: Props) {
                                     height={4}
                                 ></Image>
                             </div>
-                            <p>{channel.name}</p>
+                            <Link href={"/channel/" + channel._id}>
+                                <a className="text-blue-600 underline">
+                                    {channel.name}
+                                </a>
+                            </Link>
                         </div>
                     );
                 })}

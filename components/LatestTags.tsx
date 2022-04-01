@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface tagData {
     _id: string;
     name: string;
@@ -15,7 +17,11 @@ function LatestTags({ tags }: Props) {
             {tags.map((value) => {
                 return (
                     <p key={value._id} className="mt-4">
-                        {value.name}
+                        <Link href={"/tag/" + value._id}>
+                            <a className="text-blue-600 underline">
+                                {value.name}
+                            </a>
+                        </Link>
                     </p>
                 );
             })}
