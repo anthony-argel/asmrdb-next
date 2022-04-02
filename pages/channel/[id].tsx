@@ -77,11 +77,21 @@ export default Channel;
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const id: string | undefined | string[] = context.params?.id;
+
     if (typeof id != "string") {
         return {
             notFound: true,
         };
     }
+
+    // refresh youtube data
+    await fetch(
+        "https://dry-hollows-28901.herokuapp.com/channel/" + id + "/refresh",
+        {
+            method: "Post",
+        }
+    );
+
     let channel: channelData | null = null;
 
     let url = "https://dry-hollows-28901.herokuapp.com/channel/" + id + "/all";

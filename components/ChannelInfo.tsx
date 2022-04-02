@@ -1,5 +1,6 @@
 import { FaTwitter, FaYoutube } from "react-icons/fa";
 import { SiNiconico } from "react-icons/si";
+import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -44,32 +45,7 @@ const ChannelInfo = ({
     imgsize,
     infosize,
 }: Props) => {
-    const [requestedYTUpdate, setRequestedYTUpdate] = useState<boolean>(false);
-    const [YTUpdateError, setYTUpdateError] = useState<string>("");
     const [allTags, setAllTags] = useState([]);
-
-    function refreshYTStats(e: React.MouseEvent<HTMLButtonElement>) {
-        e.preventDefault();
-        if (loggedIn === false) {
-            return;
-        }
-        fetch(api + "/channel/" + id + "/refresh", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-            mode: "cors",
-        }).then((res) => {
-            if (res.status === 200) {
-                setRequestedYTUpdate(true);
-            } else {
-                setYTUpdateError(
-                    "This channel has already been refreshed in the last 24 hours."
-                );
-            }
-        });
-    }
 
     return (
         <div className="flex flex-col md:flex-row bg-white p-4">
@@ -122,56 +98,29 @@ const ChannelInfo = ({
                                 ></SiNiconico>
                             ) : null}
                         </div>
-                        {loggedIn ? (
-                            <button
-                                type="button"
-                                className="mt-2 bg-emerald-900 text-white p-2 rounded"
-                                onClick={(e) => refreshYTStats(e)}
-                            >
-                                Refresh YouTube Stats
-                            </button>
-                        ) : null}
-                        {YTUpdateError !== "" ? (
-                            <p className="text-red-600">{YTUpdateError}</p>
-                        ) : null}
                     </div>
                 </div>
                 <div>
                     <hr></hr>
-                    <p>
-                        Tags:
+                    <div className="p-2">
+                        <span>Tags:</span>
                         {channel.tags &&
                             channel.tags.map((value, index) => (
-                                <span key={value._id}>
+                                <button
+                                    key={value._id}
+                                    className="m-1 border  p-1 bg-gray-200"
+                                >
                                     <Link href={"/tag/" + value._id + "/1"}>
-                                        <a className="text-blue-600 underline">
+                                        <a className="text-blue-600 ">
                                             {value.tagname}
                                         </a>
                                     </Link>
-                                    {index === channel.tags.length - 1
-                                        ? null
-                                        : ", "}
-                                </span>
+                                </button>
                             ))}
-                    </p>
-                    {loggedIn ? (
-                        <form>
-                            <input
-                                className="p-1 border"
-                                type="text"
-                                id="tag"
-                                name="tag"
-                                placeholder="tag"
-                            />
-                            <button
-                                type="button"
-                                className="bg-emerald-900 text-white p-1"
-                                onClick={(e) => refreshYTStats(e)}
-                            >
-                                Add Tag
-                            </button>
-                        </form>
-                    ) : null}
+                        <button className="m-1 border rounded-full p-2 bg-gray-200">
+                            <AiOutlinePlus></AiOutlinePlus>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -189,23 +189,24 @@ const ChannelStatistics = ({ api, id, loggedIn }: Props) => {
                                     ) : null}
                                 </p>
                             ) : null}
-                            {loggedIn &&
-                            loggedInUserReview &&
-                            loggedInUserReview.rating >= 0 ? (
-                                <button
-                                    className="text-white p-4 bg-purple-600"
-                                    onClick={(e) => setShowReviewForm(true)}
-                                >
-                                    Edit Rating
-                                </button>
-                            ) : (
-                                <button
-                                    className="text-white p-4 bg-purple-600"
-                                    onClick={(e) => setShowReviewForm(true)}
-                                >
-                                    Add Rating
-                                </button>
-                            )}
+                            {loggedIn ? (
+                                loggedInUserReview &&
+                                loggedInUserReview.rating >= 0 ? (
+                                    <button
+                                        className="text-white p-4 bg-purple-600"
+                                        onClick={(e) => setShowReviewForm(true)}
+                                    >
+                                        Edit Rating
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="text-white p-4 bg-purple-600"
+                                        onClick={(e) => setShowReviewForm(true)}
+                                    >
+                                        Add Rating
+                                    </button>
+                                )
+                            ) : null}
                         </div>
                     </div>
                 </div>
