@@ -23,7 +23,7 @@ interface channelData {
 
 interface tagData {
     _id: string;
-    tagname: string;
+    name: string;
 }
 
 interface rater {
@@ -44,20 +44,23 @@ interface Props {
     api: string;
     loggedIn: boolean;
     ratings: rating[];
+    allTags?: tagData[];
 }
 
-function Channel({ channel, loggedIn, api, ratings }: Props) {
+function Channel({ channel, loggedIn, api, ratings, allTags }: Props) {
     const router = useRouter();
     const { id } = router.query;
     return (
         <div>
             <ChannelInfo
+                allowTagEditing={true}
                 channel={channel}
                 api={api}
                 loggedIn={loggedIn}
                 id={id}
                 imgsize="basis-1/3"
                 infosize="basis-2/3"
+                allTags={allTags}
             ></ChannelInfo>
             <ChannelStatistics
                 id={id}
@@ -93,6 +96,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     );
 
     let channel: channelData | null = null;
+    let allTags: tagData[] = [];
 
     let url = "https://dry-hollows-28901.herokuapp.com/channel/" + id + "/all";
 
@@ -105,11 +109,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
         .then((res) => {
             if (res) {
                 channel = res.channel;
+                allTags = res.allTags;
             }
         });
 
     return {
-        props: { channel: channel },
+        props: { channel: channel, allTags: allTags },
     };
 };
 

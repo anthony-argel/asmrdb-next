@@ -20,7 +20,7 @@ interface channelData {
 
 interface tagData {
     _id: string;
-    tagname: string;
+    name: string;
 }
 
 interface Props {
@@ -45,6 +45,7 @@ const Tag = ({ channels, api, loggedIn, tagname }: Props) => {
                 ? channels.map((value) => {
                       return (
                           <ChannelInfo
+                              allowTagEditing={false}
                               key={value._id}
                               channel={value}
                               api={api}

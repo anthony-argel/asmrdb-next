@@ -3,8 +3,9 @@ import { SiNiconico } from "react-icons/si";
 import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import TagModal from "./TagModal";
 
 interface channelData {
     status: string;
@@ -25,7 +26,7 @@ interface channelData {
 
 interface tagData {
     _id: string;
-    tagname: string;
+    name: string;
 }
 
 interface Props {
@@ -35,6 +36,8 @@ interface Props {
     id: string | string[] | undefined;
     imgsize: string;
     infosize: string;
+    allTags?: tagData[] | undefined;
+    allowTagEditing: Boolean;
 }
 
 const ChannelInfo = ({
@@ -44,8 +47,11 @@ const ChannelInfo = ({
     id,
     imgsize,
     infosize,
+    allTags,
+    allowTagEditing,
 }: Props) => {
-    const [allTags, setAllTags] = useState([]);
+    const [tags, setTags] = useState<tagData[]>([...channel.tags]);
+    const [showTagMenu, setShowTagMenu] = useState<Boolean>(false);
 
     return (
         <div className="flex flex-col md:flex-row bg-white p-4">
@@ -66,6 +72,21 @@ const ChannelInfo = ({
             <div
                 className={`${infosize} p-4 flex flex-col justify-between gap-2`}
             >
+                {allowTagEditing &&
+                loggedIn &&
+                showTagMenu &&
+                typeof allTags !== "undefined" ? (
+                    <TagModal
+                        tags={tags}
+                        api={api}
+                        loggedIn={loggedIn}
+                        id={id}
+                        setShowTagMenu={setShowTagMenu}
+                        allTags={allTags}
+                        setTags={setTags}
+                        allowTagEditing={true}
+                    ></TagModal>
+                ) : null}
                 <div className="leading-9">
                     <h1 className="font-bold text-3xl">
                         <Link href={"/channel/" + channel._id}>
@@ -80,22 +101,48 @@ const ChannelInfo = ({
                         <p>Videos: {channel.videocount}</p>
                         <div className="flex">
                             {channel.twitter && channel.twitter != "" ? (
-                                <FaTwitter
-                                    className="text-3xl"
-                                    color="#0d6efd"
-                                ></FaTwitter>
+                                <a
+                                    href={
+                                        "https://twitter.com/" + channel.twitter
+                                    }
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <FaTwitter
+                                        className="text-3xl"
+                                        color="#0d6efd"
+                                    ></FaTwitter>
+                                </a>
                             ) : null}
                             {channel.youtube && channel.youtube != "" ? (
-                                <FaYoutube
-                                    className="text-3xl"
-                                    color="red"
-                                ></FaYoutube>
+                                <a
+                                    href={
+                                        "https://www.youtube.com/channel/" +
+                                        channel.youtube
+                                    }
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <FaYoutube
+                                        className="text-3xl"
+                                        color="red"
+                                    ></FaYoutube>
+                                </a>
                             ) : null}
                             {channel.niconico && channel.niconico != "" ? (
-                                <SiNiconico
-                                    className="text-3xl"
-                                    color="gray"
-                                ></SiNiconico>
+                                <a
+                                    href={
+                                        "https://ch.nicovideo.jp/" +
+                                        channel.niconico
+                                    }
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <SiNiconico
+                                        className="text-3xl"
+                                        color="gray"
+                                    ></SiNiconico>
+                                </a>
                             ) : null}
                         </div>
                     </div>
@@ -104,22 +151,27 @@ const ChannelInfo = ({
                     <hr></hr>
                     <div className="p-2">
                         <span>Tags:</span>
-                        {channel.tags &&
-                            channel.tags.map((value, index) => (
+                        {tags &&
+                            tags.map((value, index) => (
                                 <button
                                     key={value._id}
                                     className="m-1 border  p-1 bg-gray-200"
                                 >
                                     <Link href={"/tag/" + value._id + "/1"}>
                                         <a className="text-blue-600 ">
-                                            {value.tagname}
+                                            {value.name}
                                         </a>
                                     </Link>
                                 </button>
                             ))}
-                        <button className="m-1 border rounded-full p-2 bg-gray-200">
-                            <AiOutlinePlus></AiOutlinePlus>
-                        </button>
+                        {loggedIn && allowTagEditing ? (
+                            <button
+                                className="m-1 border rounded-full p-2 bg-gray-200"
+                                onClick={(e) => setShowTagMenu(true)}
+                            >
+                                <AiOutlinePlus></AiOutlinePlus>
+                            </button>
+                        ) : null}
                     </div>
                 </div>
             </div>
