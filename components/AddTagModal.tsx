@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { MdClose } from "react-icons/md";
 import MessageWindow from "./MessageWindow";
 
 interface errorObj {
@@ -51,8 +52,20 @@ const AddTagModal = ({ api, setShowTagModal, setWindowMessage }: Props) => {
 
     return (
         <div>
-            <div className="fixed w-full h-full bg-stone-900/75 z-50 top-0 left-0 flex flex-col justify-center items-center">
-                <div className="bg-white md:w-2/6 m-4 relative text-black">
+            <div
+                onClick={(e) => setShowTagModal(false)}
+                className="fixed w-full h-full bg-stone-900/75 z-50 top-0 left-0 flex flex-col justify-center items-center"
+            >
+                <div
+                    className="bg-white md:w-2/6 m-4 relative text-black relative"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <p
+                        className="absolute text-4xl p-2 right-0 top-0 text-red-600 cursor-pointer"
+                        onClick={(e) => setShowTagModal(false)}
+                    >
+                        <MdClose></MdClose>
+                    </p>
                     <p className="font-bold text-2xl text-center p-4">
                         Request Tag
                     </p>

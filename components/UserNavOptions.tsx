@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AddChannelModal from "./AddChannelModal";
 import AddTagModal from "./AddTagModal";
 import MessageWindow from "./MessageWindow";
 
@@ -9,6 +10,7 @@ interface Props {
 const UserNavOptions = ({ api }: Props) => {
     const [showMenu, setShowMenu] = useState<Boolean>(false);
     const [showTagModal, setShowTagModal] = useState<Boolean>(false);
+    const [showChannelModal, setShowChannelModal] = useState<Boolean>(false);
     const [windowMessage, setWindowMessage] = useState("");
 
     return (
@@ -27,6 +29,13 @@ const UserNavOptions = ({ api }: Props) => {
                         setWindowMessage={setWindowMessage}
                     ></AddTagModal>
                 ) : null}
+                {showChannelModal ? (
+                    <AddChannelModal
+                        api={api}
+                        setShowChannelModal={setShowChannelModal}
+                        setWindowMessage={setWindowMessage}
+                    ></AddChannelModal>
+                ) : null}
             </div>
             <button className="" onClick={(e) => setShowMenu((prev) => !prev)}>
                 User
@@ -36,11 +45,22 @@ const UserNavOptions = ({ api }: Props) => {
                     <ul>
                         <li
                             className="p-3 cursor-pointer"
-                            onClick={(e) => setShowTagModal(true)}
+                            onClick={(e) => {
+                                setShowMenu(false);
+                                setShowTagModal(true);
+                            }}
                         >
                             Request Tag
                         </li>
-                        <li className="p-3">Add Channel</li>
+                        <li
+                            className="p-3 cursor-pointer"
+                            onClick={(e) => {
+                                setShowMenu(false);
+                                setShowChannelModal(true);
+                            }}
+                        >
+                            Add Channel
+                        </li>
                     </ul>
                 </div>
             ) : null}
