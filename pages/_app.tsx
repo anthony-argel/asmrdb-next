@@ -30,13 +30,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, [api]);
 
     useEffect(() => {
-        console.log("pinged server");
         verifyToken();
     }, [verifyToken]);
 
     const [loggedIn, setLoggedIn] = useState<Boolean>(false);
     return (
-        <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+        <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} api={api}>
             <Component
                 {...pageProps}
                 api={api}

@@ -1,14 +1,15 @@
 import Link from "next/link";
 import React, { useState, Dispatch, SetStateAction } from "react";
-import { BiSearchAlt } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
+import UserNavOptions from "./UserNavOptions";
 
 interface Props {
     loggedIn: boolean;
     setLoggedIn: Dispatch<SetStateAction<boolean>>;
+    api: string;
 }
 
-function Nav({ loggedIn, setLoggedIn }: Props) {
+function Nav({ loggedIn, setLoggedIn, api }: Props) {
     const links = [
         ["Channels", "/channels/1"],
         ["Tags", "/tags"],
@@ -52,8 +53,8 @@ function Nav({ loggedIn, setLoggedIn }: Props) {
             </ul>
             <div
                 className={`${
-                    showMenu ? "" : "hidden"
-                } flex md:flex md:justify-center md:items-center md:ml-3`}
+                    showMenu ? "" : "hidden "
+                } flex flex-col md:flex md:flex-row md:justify-center md:items-center md:ml-3`}
             >
                 <form>
                     <input
@@ -81,6 +82,7 @@ function Nav({ loggedIn, setLoggedIn }: Props) {
                         <a className="md:ml-3">Log in</a>
                     </Link>
                 )}
+                <UserNavOptions api={api}></UserNavOptions>
             </div>
         </nav>
     );

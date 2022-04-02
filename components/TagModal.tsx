@@ -106,9 +106,15 @@ const TagModal = ({
             className="fixed w-full h-full bg-stone-900/75 top-0 left-0 flex flex-col justify-center items-center "
         >
             <div
-                className="bg-white md:w-2/6 m-4"
+                className="bg-white md:w-2/6 m-4 relative"
                 onClick={(e) => e.stopPropagation()}
             >
+                <p
+                    className="absolute text-4xl p-2 right-0 top-0 text-red-600 cursor-pointer"
+                    onClick={(e) => setShowTagMenu(false)}
+                >
+                    <MdClose></MdClose>
+                </p>
                 <p className="p-4 text-center font-bold text-2xl">Edit Tags</p>
                 <hr></hr>
                 <div className="p-4">

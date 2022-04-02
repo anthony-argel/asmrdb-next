@@ -37,13 +37,17 @@ function LatestChannels({ latestChannels }: Props) {
                     return (
                         <div key={channel._id} className="">
                             <div>
-                                <Image
-                                    src={channel.imageurl}
-                                    alt=""
-                                    layout="responsive"
-                                    width={4}
-                                    height={4}
-                                ></Image>
+                                <Link href={"/channel/" + channel._id}>
+                                    <a>
+                                        <Image
+                                            src={channel.imageurl}
+                                            alt=""
+                                            layout="responsive"
+                                            width={4}
+                                            height={4}
+                                        ></Image>
+                                    </a>
+                                </Link>
                             </div>
                             <Link href={"/channel/" + channel._id}>
                                 <a className="text-blue-600 underline">

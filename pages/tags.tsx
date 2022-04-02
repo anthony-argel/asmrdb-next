@@ -15,17 +15,18 @@ const Tags = ({ tags }: Props) => {
         <>
             <div className="bg-white p-4 min-h-[98vh]">
                 <h1 className="font-bold text-3xl text-center">Tags</h1>
-                <hr></hr>
+                <hr className="mb-4"></hr>
                 {tags
                     ? tags.map((value) => {
                           return (
-                              <p key={value._id}>
-                                  <Link href={"/tag/" + value._id + "/1"}>
-                                      <a className="text-blue-600 underline">
-                                          {value.name}
-                                      </a>
-                                  </Link>
-                              </p>
+                              <Link
+                                  key={value._id}
+                                  href={"/tag/" + value._id + "/1"}
+                              >
+                                  <a className="text-blue-600 m-1 border p-2 bg-gray-200 inline-block">
+                                      {value.name}
+                                  </a>
+                              </Link>
                           );
                       })
                     : null}
