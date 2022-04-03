@@ -143,7 +143,7 @@ const AddChannelModal = ({
                 className="fixed w-full h-full bg-stone-900/75 z-50 top-0 left-0 flex flex-col justify-center items-center"
             >
                 <div
-                    className="bg-white md:w-2/6 m-4 relative text-black relative"
+                    className="bg-white max-w-[90%] w-11/12 md:w-3/6 m-4 relative text-black relative "
                     onClick={(e) => e.stopPropagation()}
                 >
                     <p
@@ -161,7 +161,7 @@ const AddChannelModal = ({
                         className="p-4 flex flex-col gap-2"
                     >
                         <label htmlFor="youtube">YouTube URL:</label>
-                        <div className="flex">
+                        <div className="flex flex-wrap">
                             <p className="p-2 border bg-gray-200">
                                 www.youtube.com/channel/
                             </p>
@@ -201,7 +201,7 @@ const AddChannelModal = ({
                             Optional
                         </p>
                         <label htmlFor="twitter">Twitter:</label>
-                        <div className="flex">
+                        <div className="flex ">
                             <span className="p-2 border bg-gray-200">@</span>
                             <input
                                 type="text"
@@ -215,7 +215,7 @@ const AddChannelModal = ({
                             ></input>
                         </div>
                         <label htmlFor="niconico">NicoNico:</label>
-                        <div className="flex">
+                        <div className="flex flex-wrap">
                             <span className="p-2 border bg-gray-200">
                                 https://ch.nicovideo.jp/
                             </span>

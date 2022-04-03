@@ -38,9 +38,35 @@ const UserNavOptions = ({ api }: Props) => {
                     ></AddChannelModal>
                 ) : null}
             </div>
-            <button className="" onClick={(e) => setShowMenu((prev) => !prev)}>
+            <button
+                className="hidden md:block"
+                onClick={(e) => setShowMenu((prev) => !prev)}
+            >
                 User
             </button>
+            <div className="bg-black text-white md:hidden">
+                <ul>
+                    <li
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                            setShowMenu(false);
+                            setShowTagModal(true);
+                        }}
+                    >
+                        Request Tag
+                    </li>
+                    <li
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                            setShowMenu(false);
+                            setShowChannelModal(true);
+                        }}
+                    >
+                        Add Channel
+                    </li>
+                </ul>
+            </div>
+
             {showMenu ? (
                 <div className="absolute top-[100%] left-[-50%] bg-black text-white">
                     <ul>

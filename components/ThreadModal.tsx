@@ -59,7 +59,7 @@ const ThreadModal = ({
                 className="fixed w-full h-full bg-stone-900/75 z-50 top-0 left-0 flex flex-col justify-center items-center"
             >
                 <div
-                    className="bg-white md:w-2/6 m-4 relative text-black relative"
+                    className="bg-white max-w-[90%] w-11/12 md:w-2/6 m-4 relative text-black relative"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <p
