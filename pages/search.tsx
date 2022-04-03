@@ -82,7 +82,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let query: string | undefined | string[] = context.query?.query;
     let estimatedPages: number = 0;
     if (query && typeof query === "string") {
-        query = query.replaceAll("-", " ");
+        const regex = "/-/g";
+        query = query.replace(regex, " ");
     }
     const page: string | undefined | string[] = context.query?.page;
 
