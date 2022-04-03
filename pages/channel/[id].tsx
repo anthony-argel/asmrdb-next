@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import ChannelComments from "../../components/ChannelComments";
 import ChannelInfo from "../../components/ChannelInfo";
@@ -28,7 +29,7 @@ interface tagData {
 
 interface rater {
     _id: string;
-    uesrname: string;
+    username: string;
 }
 
 interface rating {
@@ -52,6 +53,9 @@ function Channel({ channel, loggedIn, api, ratings, allTags }: Props) {
     const { id } = router.query;
     return (
         <div>
+            <Head>
+                <title>{channel.name + " - ASMRdb"}</title>
+            </Head>
             <ChannelInfo
                 allowTagEditing={true}
                 channel={channel}

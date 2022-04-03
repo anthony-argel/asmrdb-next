@@ -66,6 +66,9 @@ const Home: NextPage<Props> = ({
 }: Props) => {
     return (
         <>
+            <Head>
+                <title>Home - ASMRdb</title>
+            </Head>
             <div className="bg-white p-4 text-center">
                 <h1 className="font-bold text-3xl text-center">
                     ASMR Database

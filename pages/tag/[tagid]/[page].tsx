@@ -1,4 +1,6 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import ChannelInfo from "../../../components/ChannelInfo";
 
 interface channelData {
@@ -31,8 +33,17 @@ interface Props {
 }
 
 const Tag = ({ channels, api, loggedIn, tagname }: Props) => {
+    const router = useRouter();
+    const { page } = router.query;
     return (
         <div className="min-h-[90vh] bg-white p-4">
+            <Head>
+                <title>
+                    {tagname && tagname !== ""
+                        ? tagname + " - " + page + " - ASMRdb"
+                        : "ASMRdb"}
+                </title>
+            </Head>
             <h1 className="text-3xl font-bold text-center">
                 {tagname !== "" ? tagname : "Tag"}{" "}
                 <span className="text-xl">

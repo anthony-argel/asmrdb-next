@@ -1,5 +1,6 @@
 import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 interface Props {
     api: string;
@@ -66,6 +67,9 @@ const Signup = ({ api, setLoggedIn }: Props) => {
 
     return (
         <div>
+            <Head>
+                <title>Sign up - ASMRdb</title>
+            </Head>
             <div className="min-h-[90vh] flex flex-col items-center">
                 <div className="bg-white p-4  md:w-[50%]">
                     <h1 className="text-3xl font-bold text-center">Login</h1>

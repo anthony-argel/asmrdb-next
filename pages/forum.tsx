@@ -2,32 +2,42 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-interface tagData {
-    _id: string;
+interface boardData {
     name: string;
+    _id: string;
+    description: string;
+}
+
+interface User {
+    username: string;
+}
+
+interface commentData {
+    authorid: User;
+    comment: string;
 }
 
 interface Props {
-    tags: tagData[];
+    boards: boardData[];
 }
 
-const Tags = ({ tags }: Props) => {
+const forum = ({ boards }: Props) => {
     return (
-        <>
+        <div className="bg-white">
             <Head>
-                <title>Tags - ASMRdb</title>
+                <title>Boards - ASMRdb</title>
             </Head>
-            <div className="bg-white p-4 min-h-[98vh]">
-                <h1 className="font-bold text-3xl text-center">Tags</h1>
-                <hr className="mb-4"></hr>
-                {tags
-                    ? tags.map((value) => {
+            <h1 className="text-center font-bold text-3xl p-4">Boards</h1>
+            <hr></hr>
+            <div className="p-4">
+                {boards && boards.length > 0
+                    ? boards.map((value) => {
                           return (
                               <Link
                                   key={value._id}
-                                  href={"/tag/" + value._id + "/1"}
+                                  href={"/board/" + value._id}
                               >
-                                  <a className="text-blue-600 m-1 border p-2 bg-gray-200 inline-block">
+                                  <a className="m-2 bg-gray-200 p-4 inline-block">
                                       {value.name}
                                   </a>
                               </Link>
@@ -35,29 +45,29 @@ const Tags = ({ tags }: Props) => {
                       })
                     : null}
             </div>
-        </>
+        </div>
     );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-    let tags: tagData[] = [];
+    let boards: boardData[] = [];
 
-    let url = "https://dry-hollows-28901.herokuapp.com/tag";
+    let url = "https://dry-hollows-28901.herokuapp.com/board";
     await fetch(url)
         .then((res) => {
             if (res.ok) return res.json();
         })
         .then((res) => {
             if (res) {
-                tags = res.approved;
+                boards = res.boards;
             }
         });
 
     return {
         props: {
-            tags: tags,
+            boards: boards,
         },
     };
 };
 
-export default Tags;
+export default forum;

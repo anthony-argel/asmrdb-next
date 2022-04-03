@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, Dispatch, SetStateAction } from "react";
@@ -43,6 +44,9 @@ const Login = ({ api, setLoggedIn }: Props) => {
 
     return (
         <div className="min-h-[90vh] flex flex-col items-center">
+            <Head>
+                <title>Log in - ASMRdb</title>
+            </Head>
             <div className="bg-white p-4  md:w-[50%]">
                 <h1 className="text-3xl font-bold text-center">Login</h1>
                 <form

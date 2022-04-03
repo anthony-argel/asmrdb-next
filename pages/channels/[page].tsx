@@ -1,4 +1,6 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import ChannelInfo from "../../components/ChannelInfo";
 
 interface channelData {
@@ -30,8 +32,13 @@ interface Props {
 }
 
 const Channels = ({ channels, api, loggedIn }: Props) => {
+    const router = useRouter();
+    const { page } = router.query;
     return (
         <div className="min-h-[90vh] bg-white p-4">
+            <Head>
+                <title>Channels - Page {page} - ASMRdb</title>
+            </Head>
             <h1 className="text-3xl font-bold text-center">
                 Channels{" "}
                 <span className="text-xl">
