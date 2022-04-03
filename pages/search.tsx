@@ -39,7 +39,7 @@ const Search = ({ channels, api, loggedIn, pages }: Props) => {
         <div className="bg-white">
             <Head>
                 <title>
-                    {query} - Page {page} - ASMRdb
+                    {query ? query : "Search"} - Page {page} - ASMRdb
                 </title>
             </Head>
             <h1 className="text-center text-3xl font-bold p-4">
@@ -48,7 +48,7 @@ const Search = ({ channels, api, loggedIn, pages }: Props) => {
                     ? query.replaceAll("-", " ")
                     : ""}{" "}
                 <span className="text-xl">
-                    ~{channels.length} Results Found
+                    ~{channels && channels.length} Results Found
                 </span>
             </h1>
             <hr></hr>
