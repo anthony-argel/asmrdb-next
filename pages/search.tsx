@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import ChannelInfo from "../components/ChannelInfo";
 
 interface channelData {
@@ -35,6 +36,12 @@ interface Props {
 const Search = ({ channels, api, loggedIn, pages }: Props) => {
     const router = useRouter();
     const { query, page } = router.query;
+    const [strQuery, setStrQuery] = useState<string>(
+        query && typeof query === "string" && query !== ""
+            ? query.replaceAll("-", " ")
+            : ""
+    );
+
     return (
         <div className="bg-white">
             <Head>
@@ -43,10 +50,7 @@ const Search = ({ channels, api, loggedIn, pages }: Props) => {
                 </title>
             </Head>
             <h1 className="text-center text-3xl font-bold p-4">
-                Search:{" "}
-                {query && typeof query === "string" && query !== ""
-                    ? query.replaceAll("-", " ")
-                    : ""}{" "}
+                Search: {strQuery}{" "}
                 <span className="text-xl">
                     ~{channels && channels.length} Results Found
                 </span>
