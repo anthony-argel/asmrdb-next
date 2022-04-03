@@ -44,8 +44,8 @@ const UserNavOptions = ({ api }: Props) => {
             >
                 User
             </button>
-            <div className="bg-black text-white md:hidden">
-                <ul>
+            <div className="bg-black text-white mt-3 md:hidden">
+                <ul className="flex flex-col gap-3">
                     <li
                         className="cursor-pointer"
                         onClick={(e) => {

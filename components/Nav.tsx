@@ -63,7 +63,7 @@ function Nav({ loggedIn, setLoggedIn, api }: Props) {
             <div
                 className={`${
                     showMenu ? "" : "hidden "
-                } flex flex-col md:flex md:flex-row md:justify-center md:items-center md:ml-3`}
+                } flex flex-col mt-3 md:mt-0 md:flex md:flex-row md:justify-center md:items-center md:ml-3`}
             >
                 <form onSubmit={(e) => submitSearch(e)}>
                     <input
@@ -83,14 +83,14 @@ function Nav({ loggedIn, setLoggedIn, api }: Props) {
                 </form>
                 {loggedIn ? (
                     <p
-                        className="md:ml-3 cursor-pointer"
+                        className="mt-3 md:mt-0 md:ml-3 cursor-pointer"
                         onClick={(e) => logOut()}
                     >
                         Log out
                     </p>
                 ) : (
                     <Link href="/login">
-                        <a className="md:ml-3">Log in</a>
+                        <a className="mt-3 md:mt-0 md:ml-3 ">Log in</a>
                     </Link>
                 )}
                 <UserNavOptions api={api}></UserNavOptions>
