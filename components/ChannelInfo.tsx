@@ -5,7 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { GoPencil } from "react-icons/go";
 import TagModal from "./TagModal";
+import AddChannelModal from "./AddChannelModal";
+import MessageWindow from "./MessageWindow";
 
 interface channelData {
     status: string;
@@ -52,6 +55,9 @@ const ChannelInfo = ({
 }: Props) => {
     const [tags, setTags] = useState<tagData[]>([...channel.tags]);
     const [showTagMenu, setShowTagMenu] = useState<Boolean>(false);
+    const [showChannelMenu, setShowChannelMenu] = useState<Boolean>(false);
+    const [windowMessage, setWindowMessage] = useState<string>("");
+    const [channelState, setChannelState] = useState(channel);
 
     return (
         <div className="flex flex-col md:flex-row bg-white p-4">
@@ -72,6 +78,22 @@ const ChannelInfo = ({
             <div
                 className={`${infosize} p-4 flex flex-col justify-between gap-2`}
             >
+                {windowMessage !== "" ? (
+                    <MessageWindow
+                        message={windowMessage}
+                        setWindowMessage={setWindowMessage}
+                    ></MessageWindow>
+                ) : null}
+                {allowTagEditing && loggedIn && showChannelMenu && channel ? (
+                    <AddChannelModal
+                        api={api}
+                        setShowChannelModal={setShowChannelMenu}
+                        setWindowMessage={setWindowMessage}
+                        editingChannel={true}
+                        channel={channel}
+                        setChannelState={setChannelState}
+                    ></AddChannelModal>
+                ) : null}
                 {allowTagEditing &&
                 loggedIn &&
                 showTagMenu &&
@@ -88,11 +110,21 @@ const ChannelInfo = ({
                     ></TagModal>
                 ) : null}
                 <div className="leading-9">
-                    <h1 className="font-bold text-3xl">
-                        <Link href={"/channel/" + channel._id}>
-                            <a>{channel.name}</a>
-                        </Link>
-                    </h1>
+                    <div className="flex  items-center">
+                        <h1 className="font-bold text-3xl">
+                            <Link href={"/channel/" + channel._id}>
+                                <a>{channel.name}</a>
+                            </Link>
+                        </h1>
+                        {loggedIn && allowTagEditing ? (
+                            <span
+                                className="inline-block ml-2 text-blue-600 bg-gray-200 p-1 cursor-pointer"
+                                onClick={(e) => setShowChannelMenu(true)}
+                            >
+                                Edit?
+                            </span>
+                        ) : null}
+                    </div>
                     <h2 className="">Aliases: {channel.aliases}</h2>
                     <hr></hr>
                     <div>

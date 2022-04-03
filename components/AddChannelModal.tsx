@@ -3,42 +3,113 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { MdClose } from "react-icons/md";
 import MessageWindow from "./MessageWindow";
 
-interface errorObj {
-    msg: string;
-    param: string;
+interface tagData {
+    _id: string;
+    name: string;
+}
+
+interface channelData {
+    status: string;
+    _id: string;
+    name: string;
+    aliases: string;
+    imageurl: string;
+    youtube: string;
+    twitter: string;
+    lastytrefresh: string;
+    viewcount: number;
+    videocount: number;
+    __v: number;
+    startdate: string;
+    tags: tagData[];
+    niconico: string;
 }
 
 interface Props {
     api: string;
     setShowChannelModal: Dispatch<SetStateAction<Boolean>>;
     setWindowMessage: Dispatch<SetStateAction<string>>;
+    editingChannel: Boolean;
+    channel?: channelData;
+    setChannelState?: Dispatch<SetStateAction<channelData>>;
 }
 
 const AddChannelModal = ({
     api,
     setShowChannelModal,
     setWindowMessage,
+    editingChannel,
+    channel,
+    setChannelState,
 }: Props) => {
     const router = useRouter();
-    const [youtube, setYoutube] = useState<string>("");
-    const [niconico, setNicoNico] = useState<string>("");
-    const [twitter, setTwitter] = useState<string>("");
+    const [youtube, setYoutube] = useState<string>(
+        channel ? channel.youtube : ""
+    );
+    const [niconico, setNicoNico] = useState<string>(
+        channel && channel.niconico ? channel.niconico : ""
+    );
+    const [twitter, setTwitter] = useState<string>(
+        channel && channel.twitter ? channel.twitter : ""
+    );
     const [errors, setErrors] = useState<Boolean>(false);
-    const [aliases, setAliases] = useState<string>("");
-    const [selectedStatus, setSelectedStatus] = useState<string>("active");
+    const [aliases, setAliases] = useState<string>(
+        channel ? channel.aliases : ""
+    );
+    const [selectedStatus, setSelectedStatus] = useState<string>(
+        channel && channel.status ? channel.status : "Active"
+    );
 
-    function addChannel(e: React.FormEvent<HTMLFormElement>) {
+    function processFormSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
-        let status = "Active";
-        if (selectedStatus === "not active") {
-            status = "Inactive";
+        if (editingChannel) {
+            editChannel();
+        } else {
+            addChannel();
         }
+    }
+
+    function editChannel() {
+        if (!channel) {
+            return;
+        }
+        fetch(api + "/channel/" + channel._id, {
+            method: "PUT",
+            body: JSON.stringify({
+                youtube: youtube,
+                status: selectedStatus,
+                niconico: niconico,
+                twitter: twitter,
+                aliases: aliases,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+            mode: "cors",
+        }).then((res) => {
+            if (res.ok) {
+                if (typeof setChannelState !== "undefined") {
+                    let newChannel = channel;
+                    newChannel.youtube = youtube;
+                    newChannel.status = selectedStatus;
+                    newChannel.niconico = niconico;
+                    newChannel.twitter = twitter;
+                    newChannel.aliases = aliases;
+                    setChannelState(newChannel);
+                }
+                setWindowMessage("Channel Updated.");
+                setShowChannelModal(false);
+            }
+        });
+    }
+
+    function addChannel() {
         fetch(api + "/channel", {
             method: "POST",
             mode: "cors",
             body: JSON.stringify({
-                status,
+                status: selectedStatus,
                 niconico,
                 youtube,
                 twitter,
@@ -82,11 +153,11 @@ const AddChannelModal = ({
                         <MdClose></MdClose>
                     </p>
                     <p className="font-bold text-2xl text-center p-4">
-                        Add Channel
+                        {editingChannel ? "Edit Channel" : "Add Channel"}
                     </p>
                     <hr></hr>
                     <form
-                        onSubmit={(e) => addChannel(e)}
+                        onSubmit={(e) => processFormSubmit(e)}
                         className="p-4 flex flex-col gap-2"
                     >
                         <label htmlFor="youtube">YouTube URL:</label>
@@ -117,11 +188,11 @@ const AddChannelModal = ({
                                     setSelectedStatus(e.target.value)
                                 }
                             >
-                                <option key="active" value="active">
-                                    active
+                                <option key="Active" value="Active">
+                                    Active
                                 </option>
-                                <option key="not active" value="not active">
-                                    not active
+                                <option key="Inactive" value="Inactive">
+                                    Inactive
                                 </option>
                             </select>
                         </div>
@@ -174,7 +245,7 @@ const AddChannelModal = ({
                             type="submit"
                             className="p-3 bg-purple-600 text-white"
                         >
-                            Add Channel
+                            {editingChannel ? "Edit Channel" : "Add Channel"}
                         </button>
                         <ul className="text-red-600 font-bold text-center">
                             {errors ? (
