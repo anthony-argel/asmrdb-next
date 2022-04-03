@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import UserNavOptions from "./UserNavOptions";
@@ -15,11 +16,19 @@ function Nav({ loggedIn, setLoggedIn, api }: Props) {
         ["Tags", "/tags"],
         ["Forum", "/forum"],
     ];
+    const router = useRouter();
     const [showMenu, setShowMenu] = useState<Boolean>(false);
+    const [search, setSearch] = useState<string>("");
 
     const logOut = () => {
         localStorage.removeItem("token");
         setLoggedIn(false);
+    };
+
+    const submitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSearch("");
+        router.push("/search?query=" + search.replaceAll(" ", "-") + "&page=1");
     };
 
     return (
@@ -56,15 +65,17 @@ function Nav({ loggedIn, setLoggedIn, api }: Props) {
                     showMenu ? "" : "hidden "
                 } flex flex-col md:flex md:flex-row md:justify-center md:items-center md:ml-3`}
             >
-                <form>
+                <form onSubmit={(e) => submitSearch(e)}>
                     <input
-                        className="p-1 border"
+                        className="p-1 border text-black"
                         type="text"
                         id="search"
                         name="search"
                         placeholder="Search..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button>
+                    <button type="submit">
                         <p className="p-1 border box-border hover:text-black hover:bg-white">
                             Search
                         </p>

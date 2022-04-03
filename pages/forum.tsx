@@ -37,7 +37,7 @@ const forum = ({ boards }: Props) => {
                                   key={value._id}
                                   href={"/board/" + value._id}
                               >
-                                  <a className="m-2 bg-gray-200 p-4 inline-block">
+                                  <a className="m-2 bg-gray-200 p-4 inline-block text-blue-600">
                                       {value.name}
                                   </a>
                               </Link>

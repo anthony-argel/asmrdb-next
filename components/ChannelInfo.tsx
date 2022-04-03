@@ -111,7 +111,7 @@ const ChannelInfo = ({
                 ) : null}
                 <div className="leading-9">
                     <div className="flex  items-center">
-                        <h1 className="font-bold text-3xl">
+                        <h1 className="font-bold text-3xl text-blue-600">
                             <Link href={"/channel/" + channel._id}>
                                 <a>{channel.name}</a>
                             </Link>
