@@ -42,11 +42,19 @@ const Search = ({ channels, api, loggedIn, pages }: Props) => {
             : ""
     );
 
+    useEffect(() => {
+        setStrQuery(
+            query && typeof query === "string" && query !== ""
+                ? query.replaceAll("-", " ")
+                : ""
+        );
+    }, [query]);
+
     return (
-        <div className="bg-white">
+        <div className="bg-white" key={strQuery}>
             <Head>
                 <title>
-                    {query ? query : "Search"} - Page {page} - ASMRdb
+                    {strQuery ? strQuery : "Search"} - Page {page} - ASMRdb
                 </title>
             </Head>
             <h1 className="text-center text-3xl font-bold p-4">
