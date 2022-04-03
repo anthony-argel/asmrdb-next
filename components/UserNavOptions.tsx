@@ -34,6 +34,7 @@ const UserNavOptions = ({ api }: Props) => {
                         api={api}
                         setShowChannelModal={setShowChannelModal}
                         setWindowMessage={setWindowMessage}
+                        editingChannel={false}
                     ></AddChannelModal>
                 ) : null}
             </div>
