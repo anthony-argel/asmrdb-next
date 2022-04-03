@@ -81,7 +81,12 @@ const Board = ({ threads, board, loggedIn, api }: Props) => {
                                         {value.title}
                                     </a>
                                 </Link>
-                                <p>Author: {value.author.username}</p>
+                                <p>
+                                    Author:{" "}
+                                    {value.author
+                                        ? value.author.username
+                                        : "DELETED"}
+                                </p>
                                 <p>
                                     Posted:{" "}
                                     {DateTime.fromISO(value.date).toFormat(

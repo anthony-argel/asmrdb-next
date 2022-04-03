@@ -4,6 +4,9 @@ import { DateTime } from "luxon";
 import Link from "next/link";
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
+import EditThreadModal from "../../components/EditThreadModal";
+import MessageWindow from "../../components/MessageWindow";
+import Head from "next/head";
 
 interface threadData {
     _id: string;
@@ -49,8 +52,27 @@ const Thread = ({ thread, comments, api, loggedIn }: Props) => {
     const [commentsState, setCommentsState] = useState<commentData[]>([
         ...comments,
     ]);
+    const [windowMessage, setWindowMessage] = useState<string>("");
+    const [threadAuthorComment, setThreadAuthorComment] = useState<string>(
+        thread.comment
+    );
     const router = useRouter();
     const { id } = router.query;
+    const [showThreadModal, setShowThreadModal] = useState<Boolean>(false);
+
+    function deleteThread(e: React.MouseEvent<HTMLElement>) {
+        fetch(api + "/thread/" + id, {
+            method: "DELETE",
+            mode: "cors",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        }).then((res) => {
+            if (res.ok) {
+                router.push("/forum");
+            }
+        });
+    }
 
     function deleteComment(
         e: React.MouseEvent<SVGElement, MouseEvent>,
@@ -107,14 +129,48 @@ const Thread = ({ thread, comments, api, loggedIn }: Props) => {
 
     return (
         <div className="bg-white p-4">
+            <Head>
+                <title>{thread.title + " - ASMRdb"}</title>
+            </Head>
             <h1 className="font-bold text-3xl">{thread.title}</h1>
             <p>
-                Posted by {thread.author.username} on{" "}
-                {DateTime.fromISO(thread.date).toFormat("yyyy LLL dd")}
+                Posted by {thread.author ? thread.author.username : "DELETED"}{" "}
+                on {DateTime.fromISO(thread.date).toFormat("yyyy LLL dd")}
             </p>
+            {windowMessage !== "" ? (
+                <MessageWindow
+                    message={windowMessage}
+                    setWindowMessage={setWindowMessage}
+                ></MessageWindow>
+            ) : null}
+            {showThreadModal ? (
+                <EditThreadModal
+                    setShowThreadModal={setShowThreadModal}
+                    setWindowMessage={setWindowMessage}
+                    id={id}
+                    api={api}
+                    setThreadAuthorComment={setThreadAuthorComment}
+                ></EditThreadModal>
+            ) : null}
             <p className="mt-2 mb-2 p-4 border whitespace-pre-wrap">
-                {thread.comment}
+                {threadAuthorComment && thread.author
+                    ? threadAuthorComment
+                    : "This post was deleted."}
             </p>
+            {loggedIn &&
+            thread.author &&
+            localStorage.getItem("id") === thread.author._id ? (
+                <div className="flex gap-3 text-red-600">
+                    <p
+                        className="cursor-pointer"
+                        onClick={(e) => deleteThread(e)}
+                    >
+                        Delete
+                    </p>
+                    <p className="cursor-pointer">Edit</p>
+                </div>
+            ) : null}
+
             <p className="text-center font-bold text-2xl">Comments</p>
             <form onSubmit={(e) => postComment(e)}>
                 <textarea
@@ -180,7 +236,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         })
         .then((res) => {
             if (res) {
-                console.log(res);
                 thread = res.threaddata;
                 comments = res.comments;
             }
