@@ -94,6 +94,58 @@ const Home: NextPage<Props> = ({
                     <LatestReviews reviews={reviews}></LatestReviews>
                 </div>
             </div>
+
+            <div className="flex flex-col md:flex-row mt-4 gap-4 ">
+                <div className="md:basis-1/2 bg-white p-4">
+                    <p className="text-center font-bold text-xl">
+                        Microphone Recommendation
+                    </p>
+                    <hr></hr>
+                    <p>
+                        This is THE clickbait microphone of Japan. If you search{" "}
+                        <a
+                            className="text-blue-600 underline"
+                            href="https://en-de.neumann.com/ku-100"
+                        >
+                            KU100
+                        </a>{" "}
+                        on YouTube right now you will see all a bunch of
+                        Japanese ASMR videos. Note: (Check out the price){" "}
+                    </p>
+                    <Image
+                        src="/images/ku100.png"
+                        alt="mic recommendation"
+                        width={1}
+                        height={1}
+                        layout="responsive"
+                    ></Image>
+                </div>
+                <div className="basis-1/2 bg-white p-4">
+                    <p className="text-center font-bold text-xl">
+                        Headphone Recommendations
+                    </p>
+                    <hr></hr>
+                    <p>
+                        I honestly do not know much about headphones but I would
+                        recommend the{" "}
+                        <a
+                            className="text-blue-600 underline"
+                            href="https://www.amazon.com/Sony-Mdr-cd900st-Studio-Monitor-Headphones/dp/B000UPEJCU/ref=sr_1_9?crid=2HATYN65T3BDH&keywords=mdr&qid=1649035885&sprefix=mdr%2Caps%2C229&sr=8-9"
+                        >
+                            Sony MDR-CD900ST
+                        </a>
+                        . My favorite YouTuber uses them and their audio quality
+                        is amazing.
+                    </p>
+                    <Image
+                        src="/images/mdr.png"
+                        alt="headphone recommendation"
+                        width={1}
+                        height={1}
+                        layout="responsive"
+                    ></Image>
+                </div>
+            </div>
         </>
     );
 };
