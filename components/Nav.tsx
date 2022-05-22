@@ -93,7 +93,10 @@ function Nav({ loggedIn, setLoggedIn, api }: Props) {
                         <a className="mt-3 md:mt-0 md:ml-3 ">Log in</a>
                     </Link>
                 )}
-                <UserNavOptions api={api}></UserNavOptions>
+                {
+                    loggedIn ?
+                <UserNavOptions api={api}></UserNavOptions> : null
+                }
             </div>
         </nav>
     );
